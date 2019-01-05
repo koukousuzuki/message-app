@@ -3,8 +3,10 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @messages = Message.where(:receiver => @user.id)
-    @message = Message.new
+    if @user.id == current_user.id
+    else
+      @room = Room.new
+    end
   end
   
   def index
