@@ -9,6 +9,9 @@
   <p><a href="/users/<%= @user.id %>/edit" class="btn btn-success">ユーザー情報を編集する</a></p>
     <% else %>
       <%= form_for @room do |f| %>
+       <%= fields_for @entry do |e| %>
+        <%= e.hidden_field :user_id, :value => @user.id %>
+       <% end %>
       <%= f.submit "チャットを始める", :class => "btn btn-warning" %>
     <% end %>
  <% end %>

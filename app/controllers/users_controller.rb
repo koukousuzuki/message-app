@@ -6,6 +6,7 @@ class UsersController < ApplicationController
     if @user.id == current_user.id
     else
       @room = Room.new
+      @entry = Entry.new
     end
   end
   
