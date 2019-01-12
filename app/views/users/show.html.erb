@@ -16,9 +16,19 @@
     <% end %>
  <% end %>
  </div>
+ <% if @user.id == current_user.id %>
+    <div class="col-xs-6">
+      <h1>チャット一覧</h1>
+      <hr>
+      <% @entries.each do |e| %>
+        <p><a href="/rooms/<%= e.room.id %>"><strong><%= e.room.name %></strong></a></p>
+        <hr>
+      <% end %>
+      <a href="/rooms" class="btn btn-info">チャット一覧を見る</a>
+    </div>
+  <% end %>
 </div>
  <hr>
  <p><a href="/users" class="btn btn-primary">ユーザー一覧に戻る</a></p>
  <% if @user.id == current_user.id %>
-   <p><a href="/users/<%= @user.id %>/edit" class="btn btn-success">ユーザー情報を編集する</a>
  <% end %>

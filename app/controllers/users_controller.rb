@@ -4,9 +4,10 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     if @user.id == current_user.id
+       @entries = current_user.entries.limit(3)
     else
-      @room = Room.new
-      @entry = Entry.new
+       @room = Room.new
+       @entry = Entry.new
     end
   end
   

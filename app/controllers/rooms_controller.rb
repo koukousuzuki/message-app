@@ -11,24 +11,39 @@ class RoomsController < ApplicationController
   
   def show
     @room = Room.find(params[:id])
+    if Entry.where(:user_id => current_user.id, :room_id => @room.id).present?
     @messages = @room.messages
     @message = Message.new
     @entries = @room.entries
+    else
+      redirect_back(fallback_location: root_path)
+      flash[:alert] = "無効なユーザー"
+    end
   end
   
   def index
-    @room = Room.all
+    @entries = current_user.entries
   end
   
   def edit
     @room = Room.find(params[:id])
+    if Entry.where(:user_id => current_user.id, :room_id => @room.id).present?
+    else
+      flash[:alert] = "無効なユーザー"
+      redirect_back(fallback_location: root_path)
+    end
   end
   
   def update
     @room = Room.find(params[:id])
+    if Entry.where(:user_id => current_user.id, :room_id => @room_id).present?
     @room.update(params.require(:room).permit(:name, :explain))
-    flash[:notice] = "チャット情報が編集されました"
-    redirect_to :room
+    flash[:notice] = "チャット情報が変更されました"
+    redirect_back(fallback_location: root_path)
+    else
+      flash[:alert] = "無効なユーザー"
+      redirect_back(fallback_location: root_path)
+    end
   end
   
 end
